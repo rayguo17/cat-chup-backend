@@ -9,10 +9,10 @@ module.exports = (knex) => {
         jwtFromRequest: ExtraJwt.fromAuthHeaderAsBearerToken()
     }, async (payload, done) => {
         try {
-            console.log('payload',payload)
+            //console.log('payload',payload)
         let query = await knex("user").select("*")
             .where({"id": payload.id});
-        console.log('query',query);
+        //console.log('query',query);
         
         let user = {
             id: query[0].id

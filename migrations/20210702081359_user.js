@@ -9,7 +9,7 @@ exports.up = function(knex) {
       table.string('city')
       table.string('description')
       table.string('imgPath');
-    
+      table.string('bgImgPath').defaultTo('/bgPic/default_bgImage.jfif')
   })
 };
 

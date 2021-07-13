@@ -4,6 +4,7 @@ exports.up = function(knex) {
         table.integer('user_id');
         table.json('friends_list');
         table.foreign('user_id').references('user.id');
+        
     })
 };
 

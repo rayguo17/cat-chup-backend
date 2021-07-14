@@ -37,7 +37,7 @@ class PublicRouter {
                 "Close Friends":[]
             }
             let newData = {
-                user_id:id[0],
+                username:newUser.username,
                 friends_list:JSON.stringify(newFriendsList)
             }
             let savedFriends = await this.service.initialFriends(newData);

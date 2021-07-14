@@ -9,19 +9,33 @@ const fileUpload = require('express-fileupload');
 const UserService = require('./service/userService');
 const UserRouter = require('./router/userRouter');
 const PublicService = require('./service/publicService');
-const PublicRouter = require('./router/publicRouter')
+const PublicRouter = require('./router/publicRouter');
+const FriendService = require('./service/friendService');
+const FriendRouter = require('./router/friendRouter');
+const PostService = require('./service/postService');
+const PostRouter = require('./router/postRouter');
+const server = require('http').Server(app);
+const setupSocket = require('./socketIo');
 
+const corsOption = {
+  origin:'http://localhost:',
+  optionSuccessStatus:200
+}
 app.use(express.json());
 app.use(cors());
 app.use(authClass.initialize());
 app.use(express.static('public'))
 app.use(fileUpload());
+setupSocket(server);
 
 // const upload = multer({
 //     dest:'./public/profilePic'
 // })
 app.use('/api',new PublicRouter(new PublicService(knex)).router());
 app.use('/api/user',authClass.authenticate(),new UserRouter(new UserService(knex)).router())
+app.use('/api/friends',authClass.authenticate(),new FriendRouter(new FriendService(knex)).router());
+app.use('/api/post',authClass.authenticate(),new PostRouter(new PostService(knex)).router());
+
 
 
 
@@ -77,6 +91,7 @@ app.post('/api/upload-bg-pic',(req, res) => {
 
 
 
-app.listen(8080, () => {
+
+server.listen(8080, () => {
     console.log('server running on port 8080...')
 })

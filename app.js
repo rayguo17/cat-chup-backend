@@ -10,6 +10,8 @@ const UserService = require('./service/userService');
 const UserRouter = require('./router/userRouter');
 const PublicService = require('./service/publicService');
 const PublicRouter = require('./router/publicRouter');
+const FriendService = require('./service/friendService');
+const FriendRouter = require('./router/friendRouter');
 const server = require('http').Server(app);
 const setupSocket = require('./socketIo');
 
@@ -26,6 +28,7 @@ setupSocket(server);
 // })
 app.use('/api',new PublicRouter(new PublicService(knex)).router());
 app.use('/api/user',authClass.authenticate(),new UserRouter(new UserService(knex)).router())
+app.use('/api/friends',authClass.authenticate(),new FriendRouter(new FriendService(knex)).router());
 
 
 

@@ -6,7 +6,7 @@ exports.up = function(knex) {
       table.string('type');
       table.json('content');
       table.timestamp('created_at').defaultTo(knex.fn.now());
-      table.boolean('read').defaultTo(false);
+      table.boolean('solved').defaultTo(false);
   })
 };
 

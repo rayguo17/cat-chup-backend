@@ -1,9 +1,9 @@
 
 exports.up = function(knex) {
     return knex.schema.createTable('friends',(table)=>{
-        table.integer('user_id');
+        table.string('username');
         table.json('friends_list');
-        table.foreign('user_id').references('user.id');
+        table.foreign('username').references('user.username');
         
     })
 };

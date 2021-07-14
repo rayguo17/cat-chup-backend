@@ -38,8 +38,8 @@ class UserRouter {
     //dont't use user_id, just use username as identifier
     async getFriends(req,res){
         console.log('get friends',req.params);
-        let user_id = req.params.user;
-        let friendRes = await this.service.getFriends(user_id);
+        let username = req.params.user;
+        let friendRes = await this.service.getFriends(username);
         console.log('friendRes',friendRes);
         res.json(friendRes[0]);
     }
@@ -49,9 +49,11 @@ class UserRouter {
         let newNoti = {};
         Object.assign(newNoti,req.body);
         let newContent = {
-            intro:req.body.intro
+            intro:req.body.intro,
+            checked:req.body.checked
         }
         delete newNoti.intro;
+        delete newNoti.checked;
         newNoti.content = JSON.stringify(newContent);
         let saveReq = await this.service.newNotification(newNoti);
         console.log('saving notification',saveReq);

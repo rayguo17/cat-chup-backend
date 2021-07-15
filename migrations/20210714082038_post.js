@@ -5,6 +5,7 @@ exports.up = function(knex) {
         table.string('owner_name');
         table.json('content');
         table.timestamp('created_at').defaultTo(knex.fn.now());
+        table.foreign('owner_name').references('user.username');
   })
 };
 

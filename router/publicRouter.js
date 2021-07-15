@@ -84,6 +84,9 @@ class PublicRouter {
     async checkUsername(req,res){
         try {
             console.log('username',req.body.username);
+            if(!req.body.username){
+                return res.send(true);
+            }
             let username = req.body.username;
             let query = await this.service.checkUsername(username);
             console.log('query',query);

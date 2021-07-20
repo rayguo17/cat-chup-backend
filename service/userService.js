@@ -4,7 +4,7 @@ class UserService {
         this.knex = knex
     }
     getProfile(username){
-        return this.knex('user').where('username',username).select(['email','phone','city','description','imgPath','username','bgImgPath']);
+        return this.knex('user').where('username',username).select(['email','phone','city','description','imgPath','username','bgImgPath','hash','chat_id']);
     }
     updateProfile(username,newProfile){
         return this.knex('user').where('username',username).update(newProfile).returning('*');

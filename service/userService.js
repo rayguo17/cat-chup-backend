@@ -18,6 +18,7 @@ class UserService {
     getNotifications(username){
         return this.knex('notification').select('*').where('recipient',username).orderBy('created_at','desc');
     }
+
 }
 
 module.exports = UserService

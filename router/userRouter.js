@@ -10,8 +10,10 @@ class UserRouter {
         router.get('/friends/:user',this.getFriends.bind(this));
         router.post('/friendRequest',this.postFriendRequest.bind(this))
         router.get('/notifications/:user',this.getNotifications.bind(this))
+        
         return router;
     }
+    
     async getNotifications(req,res){
         console.log(req.params);
         let username = req.params.user;

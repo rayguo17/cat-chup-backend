@@ -11,6 +11,9 @@ class FriendService {
     updateFriendList(username,friendList){
         return this.knex('friends').where('username',username).update('friends_list',friendList).returning('*');
     }
+    searchUser(query){
+        return this.knex('user').whereRaw(`document @@ to_tsquery('${query}:*')`).select('*');
+    }
 }
 
 module.exports = FriendService

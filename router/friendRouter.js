@@ -7,9 +7,38 @@ class FriendRouter {
         const router = express.Router();
         router.post('/',this.addFriend.bind(this));
         router.delete('/',this.deleteFriend.bind(this));
-
+        router.put('/:user',this.updateFriends.bind(this));
+        router.get('/search/:query',this.searchUser.bind(this));
 
         return router;
+    }
+    async searchUser(req,res){
+        try {
+            let query = req.params.query;
+            console.log('search user query',query);
+            let searchSe = await this.service.searchUser(query);
+            res.send(searchSe);
+            
+
+            console.log('search res',searchSe);
+        } catch (error) {
+            console.log("searchUser error",error);
+        }
+    }
+    async updateFriends(req,res){
+        try {
+            console.log('update friends',req.body);
+        let username = req.params.user;
+        let newFriendList = req.body;
+        let updateQue = await this.service.updateFriendList(username,newFriendList);
+        console.log('update friend request',updateQue);
+        res.sendStatus(200);
+        } catch (error) {
+            console.log('update friend error',error)
+            res.sendStatus(500);
+        }
+        
+    
     }
     async deleteFriend(req,res){
         //console.log('try to delete friend',req.body);

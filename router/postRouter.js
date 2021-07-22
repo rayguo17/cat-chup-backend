@@ -7,10 +7,108 @@ class PostRouter {
     router(){
         const router  = express.Router();
         router.post('/',this.newPost.bind(this));
+        router.post('/like',this.likePost.bind(this))
         router.get('/:user',this.loadPost.bind(this));
         router.get('/user/:user',this.getPersonalPost.bind(this))
         router.get('/:user/friend/:friend',this.getFriendPost.bind(this))
+        router.get('/:postid/user/:user',this.getPostDetail.bind(this))
+        router.get('/like/:likeId',this.getLikeDetail.bind(this))
+        router.post('/comment',this.commentPost.bind(this));
+        router.get('/comment/:commentId',this.getCommentDetail.bind(this));
+        
         return router;
+    }
+    async getCommentDetail(req,res){
+        try {
+            console.log('getting comment detail',req.params);
+            let commentId = req.params.commentId;
+            let getCommentSe = await this.service.getCommentDetail(commentId);
+            console.log('get comment res',getCommentSe);
+            res.send(getCommentSe[0]);
+        } catch (error) {
+            console.log('get comment detail error',error)
+            res.sendStatus(500);
+        }
+    }
+    async commentPost(req,res){
+        try {
+            console.log('try to comment post',req.body);
+            let {user,comment,postId} = req.body;
+            let commentInSe = await this.service.insertComment(user,comment,postId);
+            console.log('comment insert res',commentInSe);
+            let commentId = commentInSe[0].id;
+            let targetPost = await this.service.getPostPure(postId);
+            let newContent = targetPost[0].content;
+            newContent.comments.push(commentId);
+            let updatePost = await this.service.updatePostContent(postId,newContent);
+            console.log('updated content',updatePost);
+            let newNoti = {
+                recipient:updatePost[0].owner_name,
+                donor:user,
+                type:'comment',
+                content:{postId:postId,comment:comment}
+            }
+            let insertNoti = await this.service.insertNoti(newNoti);
+            console.log('insertNoti',insertNoti);
+            res.send({commentId:commentId});
+        } catch (error) {
+            console.log('comment post error',error);
+            res.sendStatus(500);
+        }
+    }
+    async getLikeDetail(req,res){
+        try {
+            console.log('getting like detail',req.params);
+            let likeId = req.params.likeId;
+            let getLikeSe = await this.service.getLikeDetail(likeId);
+            console.log('getLike res',getLikeSe);
+            res.send(getLikeSe[0]);
+        } catch (error) {
+            console.log('get like detail',error);
+            res.sendStatus(500);
+        }
+    }
+    async likePost(req,res){
+        try {
+            console.log('trying to like post', req.body);
+        //res.sendStatus(200);
+        let user= req.body.user;
+        let postId=req.body.postId;
+        let likeInSe = await this.service.insertLike(user,postId);
+        console.log('like table res',likeInSe); 
+        let likeId = likeInSe[0].id;
+        let targetPost = await this.service.getPostPure(postId);
+        let newContent = targetPost[0].content;
+        let newObj = {
+            likeId:likeId,
+            user:user
+        }
+        newContent.likes.push(newObj);
+        let updatePost = await this.service.updatePostContent(postId,newContent);
+        console.log('updated content',updatePost);
+        let newNoti = {
+            recipient:updatePost[0].owner_name,
+            donor:user,
+            type:'like',
+            content:{postId:postId}
+        }
+        let insertNoti = await this.service.insertNoti(newNoti);
+        console.log('insertNoti',insertNoti);
+        res.send(newObj);
+        } catch (error) {
+            console.log('like post error',error);
+            res.sendStatus(500);
+        }
+        
+    }
+    async getPostDetail(req,res){
+        //TODO check username before giving out the post info
+        console.log('trying to get post detail',req.params);
+        let postId = req.params.postid;
+        let username = req.params.user;
+        let getPostDetailSe = await this.service.getPostDetail(postId);
+        console.log('get post res',getPostDetailSe);
+        res.send(getPostDetailSe[0]);
     }
     async getFriendPost(req,res){
         console.log('getting friend post',req.params);
@@ -50,6 +148,8 @@ class PostRouter {
                 owner_name:newPostReq.owner_name,
                 visible_group:newPostReq.visible_group
             }
+            newPostReq.content.likes=[];
+            newPostReq.content.comments=[];
             let content = JSON.stringify(newPostReq.content);
             newPost.content=content;
             let storePost = await this.service.storePost(newPost);
@@ -74,7 +174,7 @@ class PostRouter {
             //console.log('load post req',req.params);
             let owner = req.params.user;
             let ownerFriendListQuery = await this.service.getFriendList(owner);
-            //console.log('owner friend list', ownerFriendListQuery[0].friends_list["All Friends"]);
+            //console.log('owner friend list', ownerFriendListQuery[0]);
             let ownerFriendList =ownerFriendListQuery[0].friends_list["All Friends"];
             let getPostPromises = [];
             for(let i=0;i<ownerFriendList.length;i++){

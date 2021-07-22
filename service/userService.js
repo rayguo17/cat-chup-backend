@@ -18,6 +18,9 @@ class UserService {
     getNotifications(username){
         return this.knex('notification').select('*').where('recipient',username).orderBy('created_at','desc');
     }
+    getBasic(user){
+        return this.knex('user').where('username',username).select(['username','imgPath']);
+    }
 
 }
 

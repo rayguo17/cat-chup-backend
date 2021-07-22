@@ -10,10 +10,16 @@ class UserRouter {
         router.get('/friends/:user',this.getFriends.bind(this));
         router.post('/friendRequest',this.postFriendRequest.bind(this))
         router.get('/notifications/:user',this.getNotifications.bind(this))
+        router.get('/basic/:user',this.getBasic.bind(this))
         
         return router;
     }
-    
+    async getBasic(req,res){
+        console.log('getting basic profile',req.params);
+        let username = req.params.user;
+        let getBasicService = await this.service.getBasic(username);
+        res.send(getBasicService[0]);
+    }
     async getNotifications(req,res){
         console.log(req.params);
         let username = req.params.user;

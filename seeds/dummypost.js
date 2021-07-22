@@ -13,7 +13,9 @@ exports.seed = function(knex) {
           "city" : "Shanghai",
           "description" : "i am here to cat-chup",
           "imgPath" : "\/profilePic\/1626232088300.JPG",
-          "bgImgPath" : "\/bgPic\/default_bgImage.jfif"
+          "bgImgPath" : "\/bgPic\/default_bgImage.jfif",
+          "chat_id" : 114181,
+          "document" : "'ray':1"
         },
         {
           "username" : "sim",
@@ -23,7 +25,9 @@ exports.seed = function(knex) {
           "city" : "Guangzhou",
           "description" : "i am here to make friends",
           "imgPath" : "\/profilePic\/1626232121561.jfif",
-          "bgImgPath" : "\/bgPic\/default_bgImage.jfif"
+          "bgImgPath" : "\/bgPic\/default_bgImage.jfif",
+          "chat_id" : 113914,
+          "document" : "'sim':1"
         },
         {
           "username" : "cas",
@@ -33,17 +37,9 @@ exports.seed = function(knex) {
           "city" : "",
           "description" : "",
           "imgPath" : "\/profilePic\/1626252134927.jpg",
-          "bgImgPath" : "\/bgPic\/default_bgImage.jfif"
-        },
-        {
-          "username" : "olive",
-          "email" : "o@o.com",
-          "hash" : "$2b$10$uj72CdmkK1CGDbCgo0sHremYaBvoTo4IGEbMNkWZFqkApCqCv5cRG",
-          "phone" : "123",
-          "city" : "Bangkok",
-          "description" : "how do you think of the three of us being a group? good!",
-          "imgPath" : "\/profilePic\/1626268431273.png",
-          "bgImgPath" : "\/bgPic\/1626422073906.jpg"
+          "bgImgPath" : "\/bgPic\/default_bgImage.jfif",
+          "chat_id" : 114184,
+          "document" : "'cas':1"
         },
         {
           "username" : "tifa",
@@ -53,7 +49,9 @@ exports.seed = function(knex) {
           "city" : "",
           "description" : "",
           "imgPath" : "\/profilePic\/1626669127746.png",
-          "bgImgPath" : "\/bgPic\/default_bgImage.jfif"
+          "bgImgPath" : "\/bgPic\/default_bgImage.jfif",
+          "chat_id" : 114182,
+          "document" : "'tifa':1"
         },
         {
           "username" : "silence",
@@ -63,7 +61,9 @@ exports.seed = function(knex) {
           "city" : "",
           "description" : "",
           "imgPath" : "\/profilePic\/1626669239272.png",
-          "bgImgPath" : "\/bgPic\/default_bgImage.jfif"
+          "bgImgPath" : "\/bgPic\/default_bgImage.jfif",
+          "chat_id" : 114176,
+          "document" : "'silenc':1"
         },
         {
           "username" : "pony",
@@ -73,7 +73,9 @@ exports.seed = function(knex) {
           "city" : "",
           "description" : "",
           "imgPath" : "\/profilePic\/1626669600126.jpg",
-          "bgImgPath" : "\/bgPic\/default_bgImage.jfif"
+          "bgImgPath" : "\/bgPic\/default_bgImage.jfif",
+          "chat_id" : 114183,
+          "document" : "'poni':1"
         },
         {
           "username" : "titan",
@@ -83,7 +85,9 @@ exports.seed = function(knex) {
           "city" : "",
           "description" : "",
           "imgPath" : "\/profilePic\/1626673261504.png",
-          "bgImgPath" : "\/bgPic\/default_bgImage.jfif"
+          "bgImgPath" : "\/bgPic\/default_bgImage.jfif",
+          "chat_id" : 114179,
+          "document" : "'titan':1"
         },
         {
           "username" : "ion",
@@ -93,7 +97,9 @@ exports.seed = function(knex) {
           "city" : "",
           "description" : "",
           "imgPath" : "\/profilePic\/1626673469212.png",
-          "bgImgPath" : "\/bgPic\/default_bgImage.jfif"
+          "bgImgPath" : "\/bgPic\/default_bgImage.jfif",
+          "chat_id" : 114177,
+          "document" : "'ion':1"
         },
         {
           "username" : "esther",
@@ -103,7 +109,57 @@ exports.seed = function(knex) {
           "city" : "",
           "description" : "",
           "imgPath" : "\/profilePic\/1626673668552.jpg",
-          "bgImgPath" : "\/bgPic\/default_bgImage.jfif"
+          "bgImgPath" : "\/bgPic\/default_bgImage.jfif",
+          "chat_id" : 114178,
+          "document" : "'esther':1"
+        },
+        {
+          "username" : "olive",
+          "email" : "o@o.com",
+          "hash" : "$2b$10$uj72CdmkK1CGDbCgo0sHremYaBvoTo4IGEbMNkWZFqkApCqCv5cRG",
+          "phone" : "123",
+          "city" : "Bangkok",
+          "description" : "a cat-chup? good!",
+          "imgPath" : "\/profilePic\/1626268431273.png",
+          "bgImgPath" : "\/bgPic\/1626422073906.jpg",
+          "chat_id" : 114180,
+          "document" : "'oliv':1"
+        },
+        {
+          "username" : "unicode",
+          "email" : "uni@uni.com",
+          "hash" : "$2b$10$gmsGmU\/kU.7sctt8ZkxgCe1fRFaCO90pJqQ0Hd0R1xRohz2COMOA.",
+          "phone" : "",
+          "city" : "",
+          "description" : "",
+          "imgPath" : "\/profilePic\/1626760908554.png",
+          "bgImgPath" : "\/bgPic\/default_bgImage.jfif",
+          "chat_id" : 114166,
+          "document" : "'unicod':1"
+        },
+        {
+          "username" : "chat_chup",
+          "email" : "ch@ch.com",
+          "hash" : "$2b$10$R7CZhDiTA6t1Di4TuTV\/RuXhkFKMdgDVzGxhQ.vQrObWj00E\/jWsC",
+          "phone" : "",
+          "city" : "",
+          "description" : "",
+          "imgPath" : "\/profilePic\/1626763450854.png",
+          "bgImgPath" : "\/bgPic\/default_bgImage.jfif",
+          "chat_id" : 114185,
+          "document" : "'chat':1 'chup':2"
+        },
+        {
+          "username" : "konki",
+          "email" : "ko@ko.com",
+          "hash" : "$2b$10$NFr9nbqQpmTVhupvCbmQpeSi4cgNbeDzWnJ9xICV\/pyKVDMG4H0xq",
+          "phone" : "",
+          "city" : "",
+          "description" : "",
+          "imgPath" : "\/profilePic\/1626872849364.jpg",
+          "bgImgPath" : "\/bgPic\/default_bgImage.jfif",
+          "chat_id" : 114496,
+          "document" : "'konki':1"
         }
         
       ]);

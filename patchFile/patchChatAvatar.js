@@ -1,4 +1,4 @@
-const development = require('./knexfile').development;
+const development = require('../knexfile').development;
 const knex = require('knex')(development);
 require('dotenv').config()
 const axios = require('axios');

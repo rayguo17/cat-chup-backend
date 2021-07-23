@@ -145,11 +145,13 @@ class PostRouter {
             console.log('new post',req.body);
             let newPostReq = req.body;
             let newPost = {
+                type:newPostReq.type,
                 owner_name:newPostReq.owner_name,
                 visible_group:newPostReq.visible_group
             }
             newPostReq.content.likes=[];
             newPostReq.content.comments=[];
+            
             let content = JSON.stringify(newPostReq.content);
             newPost.content=content;
             let storePost = await this.service.storePost(newPost);

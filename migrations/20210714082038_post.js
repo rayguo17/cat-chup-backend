@@ -5,6 +5,10 @@ exports.up = function(knex) {
         table.string('owner_name');
         table.json('content');
         table.timestamp('created_at').defaultTo(knex.fn.now());
+
+        table.string('type');
+        // table.foreign('owner_imgPath').references('user.imgPath');
+        table.string('owen_imgPath');
   })
 };
 

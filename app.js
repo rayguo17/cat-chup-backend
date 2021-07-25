@@ -16,6 +16,8 @@ const PostService = require('./service/postService');
 const PostRouter = require('./router/postRouter');
 const server = require('http').Server(app);
 const setupSocket = require('./socketIo');
+const NotiService = require('./service/notiService');
+const NotiRouter = require('./router/notiRouter');
 
 const corsOption = {
   origin:'http://localhost:',
@@ -35,12 +37,32 @@ app.use('/api',new PublicRouter(new PublicService(knex)).router());
 app.use('/api/user',authClass.authenticate(),new UserRouter(new UserService(knex)).router())
 app.use('/api/friends',authClass.authenticate(),new FriendRouter(new FriendService(knex)).router());
 app.use('/api/post',authClass.authenticate(),new PostRouter(new PostService(knex)).router());
+app.use('/api/noti',authClass.authenticate(),new NotiRouter(new NotiService(knex)).router());
 
 
 
 
-
-
+app.post('/api/upload-post-pic',(req,res)=>{
+  let sampleFile;
+    let uploadPath;
+    console.log('req.files',req.files);
+    if (!req.files || Object.keys(req.files).length === 0) {
+        return res.status(400).send('No files were uploaded.');
+      }
+      console.log('req',req.body);
+      // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
+      sampleFile = req.files.post_pic;
+      let resultPath = '/postPic/' + Date.now() +path.extname(req.body.pic_name)
+      uploadPath = __dirname + '/public' + resultPath;
+    
+      // Use the mv() method to place the file somewhere on your server
+      sampleFile.mv(uploadPath, function(err) {
+        if (err)
+          return res.status(500).send(err);
+    
+        res.send(resultPath);
+      });      
+})
 app.post('/api/upload-profile-pic',(req, res) => {
     let sampleFile;
     let uploadPath;

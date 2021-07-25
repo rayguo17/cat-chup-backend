@@ -10,42 +10,50 @@ class UserRouter {
         router.get('/friends/:user',this.getFriends.bind(this));
         router.post('/friendRequest',this.postFriendRequest.bind(this))
         router.get('/notifications/:user',this.getNotifications.bind(this))
+        router.get('/basic/:user',this.getBasic.bind(this))
+        
         return router;
+    }
+    async getBasic(req,res){
+        console.log('getting basic profile',req.params);
+        let username = req.params.user;
+        let getBasicService = await this.service.getBasic(username);
+        res.send(getBasicService[0]);
     }
     async getNotifications(req,res){
         console.log(req.params);
         let username = req.params.user;
         let getNotiService =await this.service.getNotifications(username);
-        console.log('getting noti service',getNotiService);
+        //console.log('getting noti service',getNotiService);
         res.send(getNotiService);
     }
     async getProfile(req,res){
-        console.log(req.params);
+        //console.log(req.params);
         let username = req.params.user;
         let profile = await this.service.getProfile(username);
-        console.log('profile result',profile)
+        //console.log('profile result',profile)
         res.send(profile[0]);
     }
     async updateProfile(req,res){
-        console.log('update Profile',req.params);
-        console.log('body',req.body)
+        //console.log('update Profile',req.params);
+        //console.log('body',req.body)
         let username = req.params.user;
         let newProfile = req.body;
         let updateRes = await this.service.updateProfile(username,newProfile) 
-        console.log('update res',updateRes);
+        //console.log('update res',updateRes);
         res.sendStatus(200);
     }
     //dont't use user_id, just use username as identifier
     async getFriends(req,res){
-        console.log('get friends',req.params);
+        //console.log('get friends',req.params);
         let username = req.params.user;
         let friendRes = await this.service.getFriends(username);
-        console.log('friendRes',friendRes);
+        //console.log('friendRes',friendRes);
         res.json(friendRes[0]);
     }
     async postFriendRequest(req,res){
         try {
-            console.log('req intro',req.body);
+            //console.log('req intro',req.body);
         let newNoti = {};
         Object.assign(newNoti,req.body);
         let newContent = {
@@ -56,7 +64,7 @@ class UserRouter {
         delete newNoti.checked;
         newNoti.content = JSON.stringify(newContent);
         let saveReq = await this.service.newNotification(newNoti);
-        console.log('saving notification',saveReq);
+        //console.log('saving notification',saveReq);
         if(saveReq[0].created_at){
             res.sendStatus(200);
         }else{

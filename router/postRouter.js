@@ -15,8 +15,25 @@ class PostRouter {
         router.get('/like/:likeId',this.getLikeDetail.bind(this))
         router.post('/comment',this.commentPost.bind(this));
         router.get('/comment/:commentId',this.getCommentDetail.bind(this));
-        
+        router.post('/eventNoti',this.joinEvent.bind(this));
         return router;
+    }
+    async joinEvent (req,res){
+        try {
+            console.log('joining event in noti',req.body);
+            let newNoti = {};
+            Object.assign(newNoti,req.body);
+            let newContent = {
+                postId:req.body.content.postId
+            }
+            newNoti.content = JSON.stringify(newContent);
+            let saveReq = await this.service.insertNoti(newNoti);
+            console.log('insert noti result',saveReq);
+            res.sendStatus(200);
+        } catch (error) {
+            console.log('join event notification error',error);
+            res.sendStatus(500);
+        }
     }
     async getCommentDetail(req,res){
         try {

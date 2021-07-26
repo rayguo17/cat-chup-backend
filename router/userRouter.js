@@ -15,7 +15,7 @@ class UserRouter {
         return router;
     }
     async getBasic(req,res){
-        console.log('getting basic profile',req.params);
+        //console.log('getting basic profile',req.params);
         let username = req.params.user;
         let getBasicService = await this.service.getBasic(username);
         res.send(getBasicService[0]);

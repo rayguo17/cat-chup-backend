@@ -26,7 +26,24 @@ const setupSocket = (server)=>{
         console.log('connected!');
         //console.log('socket');
         socket.on('getMessage',message=>{
+            console.log('get message',message);
             socket.emit('getMessage',message)
+        })
+        socket.on('comment',data=>{
+            console.log('get comment',data);
+            notiIO.emit('comment',data);
+        })
+        socket.on('like',data=>{
+            console.log('get like',data);
+            notiIO.emit('like',data);
+        })
+        socket.on('friend_request',data=>{
+            console.log('add_friend',data);
+            notiIO.emit('friend_request',data);
+        })
+        socket.on('joinEvent',data=>{
+            console.log('join event',data);
+            notiIO.emit('joinEvent',data);
         })
     })
 }

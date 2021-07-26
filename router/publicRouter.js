@@ -13,8 +13,13 @@ class PublicRouter {
         router.post('/register',this.register.bind(this));
         router.post('/login',this.login.bind(this));
         router.post('/checkUsername',this.checkUsername.bind(this));
-
+        router.get('/users',this.getAllUsers.bind(this));
         return router;
+    }
+    async getAllUsers(req, res) {
+        let allUsersList = await this.service.getAllUsers();
+        //console.log('Users List result', allUsersList)
+        res.send(allUsersList);
     }
     async register(req,res){
         try {

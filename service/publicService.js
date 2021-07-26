@@ -15,6 +15,9 @@ class PublicService {
     initialFriends(initial){
         return this.knex('friends').insert(initial).returning('*');
     }
+    getAllUsers() {
+        return this.knex('user').select(['id', 'username']);
+    }
 }
 
 

@@ -18,6 +18,8 @@ const server = require('http').Server(app);
 const setupSocket = require('./socketIo');
 const NotiService = require('./service/notiService');
 const NotiRouter = require('./router/notiRouter');
+const ScheduleService = require('./service/scheduleService');
+const ScheduleRouter = require('./router/scheduleRouter');
 
 const corsOption = {
   origin:'http://localhost:',
@@ -38,7 +40,7 @@ app.use('/api/user',authClass.authenticate(),new UserRouter(new UserService(knex
 app.use('/api/friends',authClass.authenticate(),new FriendRouter(new FriendService(knex)).router());
 app.use('/api/post',authClass.authenticate(),new PostRouter(new PostService(knex)).router());
 app.use('/api/noti',authClass.authenticate(),new NotiRouter(new NotiService(knex)).router());
-
+app.use('/api/schedule',authClass.authenticate(),new ScheduleRouter(new ScheduleService(knex)).router());
 
 
 

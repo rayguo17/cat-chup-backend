@@ -43,6 +43,9 @@ class PostService {
     getCommentDetail(commentId){
         return this.knex('comment').where('comment.id',commentId).join('user',{'user.username':'comment.username'}).select(['comment.*','user.imgPath']);
     }
+    storeSchedule(newSchedule){
+        return this.knex('schedule').insert(newSchedule).returning('*');
+    }
 }
 
 module.exports = PostService

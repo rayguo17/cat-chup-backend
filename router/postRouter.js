@@ -173,6 +173,25 @@ class PostRouter {
             newPost.content=content;
             let storePost = await this.service.storePost(newPost);
             //console.log('store post result ', storePost);
+            if(newPostReq.type==='event'){
+                let newSchedule = {
+                    creator:newPost.owner_name,
+                    executor:newPost.owner_name,
+                    start:newPostReq.content.start,
+                    end:newPostReq.content.end,
+                    type:'event',
+                }
+                let scheduleContent = {
+                    title:newPostReq.content.title,
+                    caption:newPostReq.content.caption,
+                    post_id:storePost[0].id,
+                    attachPic:newPostReq.content.attachPic,
+                }
+                newSchedule.content = JSON.stringify(scheduleContent);
+                let storeSchedule = await this.service.storeSchedule(newSchedule);
+                console.log('store schedule result',storeSchedule);
+            }
+            
             let getUserInfoQuery = await this.service.getUserInfo(newPost.owner_name);
             //console.log('get user info res',getUserInfoQuery);
             let returnPost = storePost[0]

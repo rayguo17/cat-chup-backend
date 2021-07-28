@@ -22,6 +22,9 @@ class ScheduleService{
     updateSchedule(updatedSchedule){
         return this.knex('schedule').where('id',updatedSchedule.id).update(updatedSchedule).returning('*');
     }
+    getUserInfo(username){
+        return this.knex('user').where('username',username).select(['user.username','user.imgPath']);
+    }
 }
 
 module.exports = ScheduleService;

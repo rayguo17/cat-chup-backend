@@ -34,6 +34,8 @@ class ScheduleRouter{
             let scheduleContent = JSON.stringify(newSchedule.content);
             newSchedule.content = scheduleContent;
             let storeScheduleSe = await this.service.storeSchedule(newSchedule);
+            let getUserInfoQuery = await this.service.getUserInfo(newSchedule.creator);
+            storeScheduleSe[0].imgPath = getUserInfoQuery[0].imgPath;
             console.log('store schedule res',storeScheduleSe);
             res.send(storeScheduleSe[0]);
         } catch (error) {

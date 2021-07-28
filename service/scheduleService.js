@@ -19,6 +19,9 @@ class ScheduleService{
     insertNoti(newNoti){
         return this.knex('notification').insert(newNoti);
     }
+    updateSchedule(updatedSchedule){
+        return this.knex('schedule').where('id',updatedSchedule.id).update(updatedSchedule).returning('*');
+    }
 }
 
 module.exports = ScheduleService;

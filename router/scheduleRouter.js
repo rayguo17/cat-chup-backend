@@ -8,7 +8,38 @@ class ScheduleRouter{
         const router = express.Router();
         router.get('/:user',this.getSchedule.bind(this))
         router.post('/accept',this.acceptSchedule.bind(this));
+        router.post('/',this.insertSchedule.bind(this));
+        router.put('/',this.updateSchedule.bind(this));
         return router;
+    }
+    async updateSchedule(req,res){
+        try {
+            console.log('updating schedule',req.body);
+            let updatedSchedule = req.body;
+            let scheduleContent = JSON.stringify(updatedSchedule.content);
+            updatedSchedule.content = scheduleContent;
+            let updateScheduleSe = await this.service.updateSchedule(updatedSchedule);
+            console.log('update schedule res',updateScheduleSe);
+            res.send(updateScheduleSe[0]);
+
+        } catch (error) {
+            console.log('update schedule error',error);
+            res.sendStatus(500);
+        }
+    }
+    async insertSchedule(req,res){
+        try {
+            console.log('inserting schedule',req.body);
+            let newSchedule = req.body;
+            let scheduleContent = JSON.stringify(newSchedule.content);
+            newSchedule.content = scheduleContent;
+            let storeScheduleSe = await this.service.storeSchedule(newSchedule);
+            console.log('store schedule res',storeScheduleSe);
+            res.send(storeScheduleSe[0]);
+        } catch (error) {
+            console.log('try to insert schedule error',error);
+            res.sendStatus(500);
+        }
     }
     async acceptSchedule(req,res){
         try {

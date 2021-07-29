@@ -12,7 +12,7 @@ class NotiRouter{
     }
     async ignoreNoti(req,res){
         try {
-            console.log('ignoring noti',req.params);
+            //console.log('ignoring noti',req.params);
             let notiId = req.params.notiId;
             let ignoreNotiSe = await this.service.ignoreNoti(notiId);
             res.sendStatus(200);

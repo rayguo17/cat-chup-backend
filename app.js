@@ -22,11 +22,11 @@ const ScheduleService = require('./service/scheduleService');
 const ScheduleRouter = require('./router/scheduleRouter');
 
 const corsOption = {
-  origin:'http://localhost:',
+  origin:'https://letscatchupnow.com',
   optionSuccessStatus:200
 }
 app.use(express.json());
-app.use(cors());
+app.use(cors(corsOption));
 app.use(authClass.initialize());
 app.use(express.static('public'))
 app.use(fileUpload());
@@ -72,7 +72,7 @@ app.post('/api/upload-profile-pic',(req, res) => {
     if (!req.files || Object.keys(req.files).length === 0) {
         return res.status(400).send('No files were uploaded.');
       }
-      console.log('req',req.body);
+      //console.log('req',req.body);
       // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
       sampleFile = req.files.profile_pic;
       let resultPath = '/profilePic/' + Date.now() +path.extname(req.body.pic_name)
@@ -89,11 +89,11 @@ app.post('/api/upload-profile-pic',(req, res) => {
 app.post('/api/upload-bg-pic',(req, res) => {
     let sampleFile;
     let uploadPath;
-    console.log('req.files',req.files);
+    //console.log('req.files',req.files);
     if (!req.files || Object.keys(req.files).length === 0) {
         return res.status(400).send('No files were uploaded.');
       }
-      console.log('req',req.body);
+      //console.log('req',req.body);
       // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
       sampleFile = req.files.profile_pic;
       let resultPath = '/bgPic/' + Date.now() +path.extname(req.body.pic_name)

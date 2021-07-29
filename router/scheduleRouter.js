@@ -14,12 +14,12 @@ class ScheduleRouter{
     }
     async updateSchedule(req,res){
         try {
-            console.log('updating schedule',req.body);
+            //console.log('updating schedule',req.body);
             let updatedSchedule = req.body;
             let scheduleContent = JSON.stringify(updatedSchedule.content);
             updatedSchedule.content = scheduleContent;
             let updateScheduleSe = await this.service.updateSchedule(updatedSchedule);
-            console.log('update schedule res',updateScheduleSe);
+            //console.log('update schedule res',updateScheduleSe);
             res.send(updateScheduleSe[0]);
 
         } catch (error) {
@@ -29,14 +29,14 @@ class ScheduleRouter{
     }
     async insertSchedule(req,res){
         try {
-            console.log('inserting schedule',req.body);
+            //console.log('inserting schedule',req.body);
             let newSchedule = req.body;
             let scheduleContent = JSON.stringify(newSchedule.content);
             newSchedule.content = scheduleContent;
             let storeScheduleSe = await this.service.storeSchedule(newSchedule);
             let getUserInfoQuery = await this.service.getUserInfo(newSchedule.creator);
             storeScheduleSe[0].imgPath = getUserInfoQuery[0].imgPath;
-            console.log('store schedule res',storeScheduleSe);
+            //console.log('store schedule res',storeScheduleSe);
             res.send(storeScheduleSe[0]);
         } catch (error) {
             console.log('try to insert schedule error',error);
@@ -45,13 +45,13 @@ class ScheduleRouter{
     }
     async acceptSchedule(req,res){
         try {
-            console.log('accepting join schedule',req.body);
+            //console.log('accepting join schedule',req.body);
             let postId = req.body.post_id;
             let executor = req.body.executor;
             let notiId = req.body.noti_id;
             let getPostDetail = await this.service.getPostDetail(postId);
 
-            console.log('get post detail res',getPostDetail);
+            //console.log('get post detail res',getPostDetail);
             let newSchedule = {
                 creator:getPostDetail[0].owner_name,
                 executor:executor,
@@ -79,7 +79,7 @@ class ScheduleRouter{
             }
             newNoti.content = JSON.stringify(notiContent);
             let insertNoti = await this.service.insertNoti(newNoti);
-            console.log('store schedule res',storeSchedule);
+            //console.log('store schedule res',storeSchedule);
             res.sendStatus(200);
         } catch (error) {
             console.log('accept join schedule error',error);
@@ -88,10 +88,10 @@ class ScheduleRouter{
     }
     async getSchedule(req,res){
         try {
-            console.log('getting schedule',req.params);
+            //console.log('getting schedule',req.params);
             let username = req.params.user;
             let getScheduleSe = await this.service.getSchedule(username);
-            console.log('get schedule res',getScheduleSe);
+            //console.log('get schedule res',getScheduleSe);
             res.send(getScheduleSe);
         } catch (error) {
             console.log('get schedule error',error);

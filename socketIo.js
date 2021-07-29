@@ -10,7 +10,7 @@ const setupSocket = (server)=>{
     
     const io = (require('socket.io')(server,{
         cors:{
-            origin:'http://localhost:3000',
+            origin:'https://letscatchupnow.com',
             methods:['GET','POST']
         }
     }));
@@ -40,11 +40,11 @@ const setupSocket = (server)=>{
         }
     }
     notiIO.on('connection',socket=>{
-        console.log('connected!');
+        //console.log('connected!');
         //console.log('socket');
         //console.log('connected user',users);
         socket.on('login',function(data){
-            console.log('a use',data.username,socket.id);
+            //console.log('a use',data.username,socket.id);
             //need to check this user exist or not?
             let match = users.find((user)=>user.username===data.username)
             if(match){
@@ -60,29 +60,29 @@ const setupSocket = (server)=>{
                 items.forEach(function(item,i){
                     unSendNoti.push(JSON.parse(item));
                 })
-                console.log('unsend notifications',unSendNoti);
+                //console.log('unsend notifications',unSendNoti);
                 socket.emit('initialNoti',unSendNoti);
             })
             
-            console.log('users list',users)
+            //console.log('users list',users)
         })
         socket.on('clearNoti',(username)=>{
             redisClient.del(username);
         })
         socket.on('getMessage',message=>{
-            console.log('get message',message);
+            //console.log('get message',message);
             socket.emit('getMessage',message)
         })
         socket.on('comment',data=>{
-            console.log('get comment',data);
+            //console.log('get comment',data);
             let targetSocketId = getUser(data.recipient);
             if(targetSocketId){
                 notiIO.to(targetSocketId).emit('comment',data);
             }else{
                 //store the message into redis
-                console.log('this user is not online');
+                //console.log('this user is not online');
                 redisClient.lpush(data.recipient,JSON.stringify(data),function(err,number){
-                    console.log('insert done',number);
+                    //console.log('insert done',number);
                 });
                 
             }
@@ -94,28 +94,28 @@ const setupSocket = (server)=>{
                 notiIO.to(targetSocketId).emit('acceptEvent',data);
             }else{
                 //store the message into redis
-                console.log('this user is not online');
+                //console.log('this user is not online');
                 redisClient.lpush(data.recipient,JSON.stringify(data),function(err,number){
-                    console.log('insert done',number);
+                    //console.log('insert done',number);
                 });
                 
             }
         })
         socket.on('like',data=>{
-            console.log('get like',data);
+            //console.log('get like',data);
             let targetSocketId = getUser(data.recipient);
             if(targetSocketId){
                 notiIO.to(targetSocketId).emit('like',data);
             }else{
                 //store the message into redis
                 redisClient.lpush(data.recipient,JSON.stringify(data),function(err,number){
-                    console.log('insert done',number);
+                    //console.log('insert done',number);
                 });
             }
             
         })
         socket.on('friend_request',data=>{
-            console.log('add_friend',data);
+            //console.log('add_friend',data);
             //first check if target exist
             //if exist then send to target
             let targetSocketId = getUser(data.recipient);
@@ -123,30 +123,30 @@ const setupSocket = (server)=>{
                 notiIO.to(targetSocketId).emit('friend_request',data);
             }else{
                 //store the message into redis
-                console.log('this user is not online');
+                //console.log('this user is not online');
                 redisClient.lpush(data.recipient,JSON.stringify(data),function(err,number){
-                    console.log('insert done',number);
+                    //console.log('insert done',number);
                 });
             }
             
         })
         socket.on('joinEvent',data=>{
-            console.log('join event',data);
+            //console.log('join event',data);
             let targetSocketId = getUser(data.recipient);
             if(targetSocketId){
                 notiIO.to(targetSocketId).emit('joinEvent',data);
             }else{
                 //store the message into redis
                 redisClient.lpush(data.recipient,JSON.stringify(data),function(err,number){
-                    console.log('insert done',number);
+                    //console.log('insert done',number);
                 });
             }
             
         })
         socket.on('disconnect',function(){
-            console.log('user disconnecting',socket.id);
+            //console.log('user disconnecting',socket.id);
             users = users.filter((user)=>user.socketId!==socket.id)
-            console.log('users list',users);
+            //console.log('users list',users);
         })
     })
 }
